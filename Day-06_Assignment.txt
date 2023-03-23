@@ -1,0 +1,198 @@
+3. Write a program that takes a input and determines if the number is a prime. 
+=>
+
+#!/bin/bash
+echo -e "Enter Number : \c"
+read n
+for((i=2; i<=$n/2; i++))
+do
+  ans=$(( n%i ))
+  if [ $ans -eq 0 ]
+  then
+    echo "$n is not a prime number."
+    exit 0
+  fi
+done
+echo "$n is a prime number."
+
+
+$ bash PowerOf2.sh 6
+Enter Number : 25
+25 is not a prime number.
+-----------------------------------------------------
+4. Extend the program to take a range of number as input and output the Prime Numbers in that range. 
+=>
+
+#!/bin/bash
+echo "Enter a limit"
+read limit
+echo "prime numbers upto $limit are :"
+echo "1"
+i=2
+while [ $i -le $limit ]
+do
+    flag=1
+    j=2    
+    while [ $j -lt $i ]
+    do
+         rem=$(( $i % $j ))
+        if [ $rem -eq 0 ]
+        then
+          flag=0
+          break
+        fi
+    j=$(( $j+1 ))
+    done
+    if [ $flag -eq 1 ]
+    then
+       echo "$i"
+    fi
+i=$(( $i+1 ))
+done
+
+
+$ bash PowerOf2.sh
+Enter a limit
+12
+prime numbers upto 12 are :
+1
+2
+3
+5
+7
+11
+-----------------------------------------------------
+5. Write a program that computes a factorial of a number taken as input.
+5 Factorial – 5! = 1 * 2 * 3 * 4 * 5
+=>
+
+# shell script for factorial of a number
+# factorial using for loop
+
+echo "Enter a number"
+
+# Read the number
+read num                     
+
+fact=1                    
+
+for((i=2;i<=num;i++))
+{
+  fact=$((fact * i)) 
+}
+
+echo $fact
+
+
+
+Yogesh@DESKTOP-729HECG MINGW64 ~ (main)
+$ bash PowerOf2.sh
+Enter a number
+5
+120
+----------------------------------------------------
+6. Write a program to compute Factors of a number N using prime factorization method.
+
+Logic -> Traverse till i*i <= N instead of i <= N for efficiency.
+O/P -> Print the prime factors of number N.
+=>
+
+
+# script to find prime factors
+echo "enter an integer:"
+read input
+if [ $input -lt 1 ];then
+echo "not allowed!"
+exit 1
+fi
+# find factors and prime
+
+i=2
+count=0
+flag=0
+for ((i;i<$input;));do
+    
+  if [ `expr $input % $i` -eq 0 ];then
+      factor=$i
+
+  for ((j=2;j<=`expr $factor / 2`;));do
+      flag=0
+      if [ `expr $factor % $j` -eq 0 ];then
+      flag=1
+      break
+      fi
+      j=`expr $j + 1`
+  done
+  if [ $flag -eq 0 ];then
+  echo "[ $factor ]"
+  count=1
+  fi
+  fi
+  i=`expr $i + 1`
+  done
+  if [ $count -eq 0 ];then
+  echo "no prime factors found except 1 and $input"
+  fi
+
+
+
+Yogesh@DESKTOP-729HECG MINGW64 ~ (main)
+$ bash Factors.sh
+enter an integer:
+5
+no prime factors found except 1 and 5
+
+Yogesh@DESKTOP-729HECG MINGW64 ~ (main)
+$ bash Factors.sh
+enter an integer:
+15
+[ 3 ]
+[ 5 ]
+
+----------------------------------------------------
+
+
+
+#!/bin/bash -x
+
+read -p "Enter a number:" n
+totalharmonic=0
+
+
+for((count=1;count<=$n;count++))
+do
+
+harmonic=$((1/$count))
+totalharmonic=$(($harmonic + $totalharmonic));
+done
+
+echo "nth harmonic number is $totalharmonic"
+
+
+
+Yogesh@DESKTOP-729HECG MINGW64 ~ (main)
+$ bash Harmonic.sh
+Enter a number:6
+nth harmonic number is 1
+---------------------------------------------------- 
+2. x`x`Write a function to check if the two numbers are Palindromes
+
+#!/bin/bash
+
+is_palindrome() {
+    local arg=$1 i j
+    for ((i = 0, j = ${#arg} - 1; i < j; ++i, --j)); do
+        [[ ${arg:i:1} = "${arg:j:1}" ]] || return
+    done
+}
+
+read -r -p 'Enter two words: ' a b
+for word in $a $b; do
+    is_palindrome "$word" && echo "$word is palindrome"
+done
+
+
+
+$ bash Palindrome.sh
+Enter two words: 121 241
+121 is palindrome
